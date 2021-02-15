@@ -1,0 +1,56 @@
+#colFirst {
+    background-color:#EBF0F4;
+    border-radius: 5px;
+}
+
+#colSecond {
+    
+}
+
+.col-3 {
+    background-color: yellow;
+}
+
+header {
+    text-align: center;
+    background-color: rgb(4, 61, 61);
+    color: white;
+    padding: 20px;
+}
+
+.container {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    padding: 0;
+}
+
+#one {
+    background-color: red;
+}
+#second {
+    background-color: blue;
+}
+
+.container-fluid {
+    height:50rem;
+}
+
+#currentWeather {
+height: auto;
+border: 2px solid gray;
+border-radius: 5px;
+padding: 20px;
+margin-bottom: 10px;
+margin-top: 5px;
+}
+
+#uv {
+    border-radius: 3px;
+    background-color: rgb(216, 25, 25);
+    color: white;
+    padding: 3px;
+
+}
