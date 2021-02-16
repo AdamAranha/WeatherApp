@@ -1,7 +1,7 @@
 var weatherWeek
 var weatherToday
 var uvToday
-var cityList = '[]'
+var cityList = []
 var webList
 
 // For today
@@ -51,28 +51,30 @@ function displayToday() {
 }
 
 
-function logCity(tempObj) {
-
-    tempObj = { city }
-    localStorage.setItem()
-    localStorage.cityList = JSON.stringify(cityList)
-    console.log(cityList, typeof cityList)
-    updateList()
-}
-function showCity() {
-    temp = JSON.parse(localStorage.cityList || '[]')
-    cityList = temp
-    updateList()
-}
-
-function updateList() {
-    for (let i = 0; i < cityList.length; i++) {
-        document.querySelector('#cityList').innerHTML +=
-            `<li onclick="getWeatherToday('${cityList[i]}')" class="list-group-item">${cityList[i]}</li>`
+function logCity(cityName) {
+    // Checks if the user searched city is already in the cityList Array
+    // If not, then the city is added to the list
+    if (!cityList.includes(cityName)) {
+        console.log('City added to cityList')
+        cityList.push(cityName)
     }
+    else {
+        console.log('City already in cityList')
+    }
+    // cityList array in localStorage in updated
+    localStorage.setItem('cityList', JSON.stringify(cityList))
+
+
+}
+// Updates the current session cityList with localStorage.cityList
+function updateCurrentList() {
+    let cloudList = JSON.parse(localStorage.cityList)
+    cityList = cloudList
 }
 
-showCity()
+updateCurrentList()
+
+
 // THIS IS FOR THE 5 DAY FORECAST
 // async function getWeather(query) {
 //     weather = await fetch(`https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
