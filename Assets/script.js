@@ -1,6 +1,7 @@
 var weatherWeek
 var weatherToday
 var uvToday
+var workingWeek
 var cityList = []
 var webList
 
@@ -12,7 +13,9 @@ var temp
 var humidity
 var wind
 var uv
+var iconToday
 // icon
+
 // Registers what the user search
 function registerSearch(event) {
     event.preventDefault()
@@ -27,29 +30,61 @@ async function getWeatherToday(query) {
     lon = weatherToday.coord.lon
     lat = weatherToday.coord.lat
     city = weatherToday.name
+    country = weatherToday.sys.country
     temp = weatherToday.main.temp
     humidity = weatherToday.main.humidity
     wind = weatherToday.wind.speed
-    console.log(cityList, typeof cityList)
+    iconToday = weatherToday.weather[0].icon
 
 
     uvToday = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,daily,hourly,minutely&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
 
     uv = uvToday.current.uvi
+
+    weatherWeek = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
+    workingWeek = weatherWeek.list.filter(test => test.dt_txt.endsWith('12:00:00'))
+
+    document.querySelector('#weatherRow').innerHTML = ''
+    for (let i = 0; i < workingWeek.length; i++) {
+        let dayOfWeek = workingWeek[i].dt_txt.slice(0, 10)
+        let feelsLike = workingWeek[i].main.feels_like
+        let currentHumidity = workingWeek[i].main.humidity
+        let iconWeek = workingWeek[0].weather[0].icon
+        displayWeek(dayOfWeek, feelsLike, currentHumidity, iconWeek)
+    }
     displayToday()
     logCity(city)
 }
 
 
 function displayToday() {
-    document.querySelector('#cityName').innerHTML = `${city} (${moment().format('MM/DD/YYYY')})`
+    document.querySelector('#cityName').innerHTML = `${city}, `
+    document.querySelector('#countryName').innerHTML = `${country} (${moment().format('MM/DD/YYYY')}) <img src="/homework/WeatherApp/Assets/icons/${iconToday}.png" style="width:50px;">`
     document.querySelector('#temp').innerHTML = `${temp} °C`
     document.querySelector('#humid').innerHTML = `${humidity}%`
     document.querySelector('#wind').innerHTML = `${wind} km/h`
     document.querySelector('#uv').innerHTML = `${uv}`
 
+
 }
 
+function displayWeek(dayOfWeek, feelsLike, currentHumidity, iconWeek) {
+
+    document.querySelector('#weatherRow').innerHTML +=
+
+        `
+        <div class="col-2 mx-1">
+        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div id="thisDate" class="card-header"><strong>${dayOfWeek}</strong></div>
+            <div class="card-body">
+            <img src="/homework/WeatherApp/Assets/icons/${iconWeek}.png" style="width:50px;">
+                <p id="thisTemp" class="card-text">Temp: ${feelsLike} °C</p>
+                <p id="thisHumidity">Humidity: ${currentHumidity}%</p>
+            </div>
+        </div>
+    </div>
+        `
+}
 
 function logCity(cityName) {
     // Checks if the user searched city is already in the cityList Array
@@ -63,6 +98,8 @@ function logCity(cityName) {
     }
     // cityList array in localStorage in updated
     localStorage.setItem('cityList', JSON.stringify(cityList))
+    // Updates the visible List of Cities on the web page
+    showCityList()
 
 
 }
@@ -72,7 +109,17 @@ function updateCurrentList() {
     cityList = cloudList
 }
 
+// Creates a visible list of Cities
+function showCityList() {
+    document.querySelector('#cityList').innerHTML = ''
+    for (let i = 0; i < cityList.length; i++) {
+        document.querySelector('#cityList').innerHTML +=
+            `<li onclick="getWeatherToday('${cityList[i]}')" class="list-group-item">${cityList[i]}</li>`
+    }
+}
+
 updateCurrentList()
+showCityList()
 
 
 // THIS IS FOR THE 5 DAY FORECAST
