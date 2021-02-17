@@ -105,7 +105,7 @@ function logCity(cityName) {
 }
 // Updates the current session cityList with localStorage.cityList
 function updateCurrentList() {
-    let cloudList = JSON.parse(localStorage.cityList)
+    let cloudList = JSON.parse(localStorage.cityList || '[]')
     cityList = cloudList
 }
 
