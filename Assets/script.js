@@ -24,7 +24,7 @@ function registerSearch(event) {
 }
 // Maps variables for the current weather
 async function getWeatherToday(query) {
-    weatherToday = await fetch(`https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
+    weatherToday = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
 
 
     lon = weatherToday.coord.lon
@@ -37,17 +37,17 @@ async function getWeatherToday(query) {
     iconToday = weatherToday.weather[0].icon
 
 
-    uvToday = await fetch(`http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,daily,hourly,minutely&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
+    uvToday = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,daily,hourly,minutely&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
 
     uv = uvToday.current.uvi
 
-    weatherWeek = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
+    weatherWeek = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
     workingWeek = weatherWeek.list.filter(test => test.dt_txt.endsWith('12:00:00'))
 
     document.querySelector('#weatherRow').innerHTML = ''
     for (let i = 0; i < workingWeek.length; i++) {
         let dayOfWeek = workingWeek[i].dt_txt.slice(0, 10)
-        let feelsLike = workingWeek[i].main.feels_like
+        let feelsLike = workingWeek[i].main.temp
         let currentHumidity = workingWeek[i].main.humidity
         let iconWeek = workingWeek[0].weather[0].icon
         displayWeek(dayOfWeek, feelsLike, currentHumidity, iconWeek)
