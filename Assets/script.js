@@ -41,7 +41,7 @@ async function getWeatherToday(query) {
 
     uv = uvToday.current.uvi
 
-    weatherWeek = await fetch(`https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
+    weatherWeek = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
     workingWeek = weatherWeek.list.filter(test => test.dt_txt.endsWith('12:00:00'))
 
     document.querySelector('#weatherRow').innerHTML = ''
