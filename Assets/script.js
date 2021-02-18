@@ -41,6 +41,9 @@ async function getWeatherToday(query) {
 
     uv = uvToday.current.uvi
 
+    if (uv > 3) { document.querySelector("#uv").style.backgroundColor = "rgb(216, 25, 25)", document.querySelector("#uv").style.color = "white" }
+    else { document.querySelector("#uv").style.backgroundColor = "white", document.querySelector("#uv").style.color = "black" }
+
     weatherWeek = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&appid=d527e56ccdc4853efdf6570164c6eeab`).then(r => r.json())
     workingWeek = weatherWeek.list.filter(test => test.dt_txt.endsWith('12:00:00'))
 
