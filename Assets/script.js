@@ -59,7 +59,7 @@ async function getWeatherToday(query) {
 
 function displayToday() {
     document.querySelector('#cityName').innerHTML = `${city}, `
-    document.querySelector('#countryName').innerHTML = `${country} (${moment().format('MM/DD/YYYY')}) <img src="/homework/WeatherApp/Assets/icons/${iconToday}.png" style="width:50px;">`
+    document.querySelector('#countryName').innerHTML = `${country} (${moment().format('MM/DD/YYYY')}) <img src="/Assets/icons/${iconToday}.png" style="width:50px;">`
     document.querySelector('#temp').innerHTML = `${temp} °C`
     document.querySelector('#humid').innerHTML = `${humidity}%`
     document.querySelector('#wind').innerHTML = `${wind} km/h`
