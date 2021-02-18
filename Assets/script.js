@@ -59,7 +59,7 @@ async function getWeatherToday(query) {
 
 function displayToday() {
     document.querySelector('#cityName').innerHTML = `${city}, `
-    document.querySelector('#countryName').innerHTML = `${country} (${moment().format('MM/DD/YYYY')}) <img src="/Assets/icons/${iconToday}.png" style="width:50px;">`
+    document.querySelector('#countryName').innerHTML = `${country} (${moment().format('MM/DD/YYYY')}) <img src="/icons/${iconToday}.png" style="width:50px;">`
     document.querySelector('#temp').innerHTML = `${temp} °C`
     document.querySelector('#humid').innerHTML = `${humidity}%`
     document.querySelector('#wind').innerHTML = `${wind} km/h`
@@ -77,7 +77,7 @@ function displayWeek(dayOfWeek, feelsLike, currentHumidity, iconWeek) {
         <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
             <div id="thisDate" class="card-header"><strong>${dayOfWeek}</strong></div>
             <div class="card-body">
-            <img src="/homework/WeatherApp/Assets/icons/${iconWeek}.png" style="width:50px;">
+            <img src="/icons/${iconWeek}.png" style="width:50px;">
                 <p id="thisTemp" class="card-text">Temp: ${feelsLike} °C</p>
                 <p id="thisHumidity">Humidity: ${currentHumidity}%</p>
             </div>
